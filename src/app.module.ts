@@ -4,29 +4,32 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import configuration from './config/configuration';
 import { HealthcheckController } from './healthcheck/healthcheck.controller';
 import { ApiModule } from './api.module';
-import getConfig from './config/configuration';
 import { AuthMiddleware } from './resources/auth/auth.middleware';
-import { RedisService } from './components/redis/redis.service';
-require('dotenv').config()
-
-const config = getConfig();
+import { RedisService } from './services/redis/redis.service';
+import { User } from './entities/user.entity';
+import getConfig from './config/configuration';
+import { EventsModule } from './services/events/events.module';
 
 @Module({
-    imports: [
-        ConfigModule.forRoot({
-            isGlobal: true,
-            load: [configuration],
-        }),
-        TypeOrmModule.forRoot(config.database as any),
-        ApiModule
-    ],
-    controllers: [HealthcheckController],
-    providers: [RedisService]
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [configuration],
+    }),
+    TypeOrmModule.forRootAsync({
+      useFactory() {
+        return getConfig().database;
+      },
+    }),
+    TypeOrmModule.forFeature([User]),
+    ApiModule,
+    EventsModule,
+  ],
+  controllers: [HealthcheckController],
+  providers: [RedisService],
 })
 export class AppModule {
-    configure(consumer: MiddlewareConsumer) {
-        consumer
-            .apply(AuthMiddleware)
-            .forRoutes('*');
-    }
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes('*');
+  }
 }
