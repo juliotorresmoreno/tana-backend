@@ -29,7 +29,7 @@
     "@nestjs/swagger": "^7.1.16",
     "@nestjs/typeorm": "^10.0.1",
     "@types/http-errors": "^2.0.4",
-    "@types/node": "^20.9.3",
+    "@types/node": "^20.9.4",
     "@types/randomstring": "^1.1.11",
     "@types/ws": "^8.5.10",
     "aws-sdk": "^2.1501.0",
