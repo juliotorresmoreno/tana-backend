@@ -19,5 +19,6 @@ import { User } from 'src/entities/user.entity';
     SecureService,
     RedisService,
   ],
+  exports: [AuthService],
 })
 export class AuthModule {}

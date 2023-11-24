@@ -1,7 +1,7 @@
 
 @host=http://localhost:4040
 
-@authorization=4vU9Zv4aPlWEIdMuTeIDCjpeBXaDGQa6E1v1kNUWSzJJJoce8RNKH93TQ0hyDvgp
+@authorization=h0iwULJvVS3VkTbSd4J7GCqClPvrG31cJb6KFnvNE4ISrBe32qPCIEt62hZ7lKKZ
 
 ###
 GET {{host}}/health
@@ -34,6 +34,10 @@ Content-Type: application/json
   "email": "jtorres990@gmail.com",
   "password": "Mastercard-1!"
 }
+
+###
+GET {{host}}/auth/session
+Authorization: Bearer {{authorization}}
 
 ###
 POST {{host}}/auth/verification-code

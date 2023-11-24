@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import getL18N from 'src/l18n/l18n.lang';
 import * as randomstring from 'randomstring';
 import {
@@ -7,21 +7,31 @@ import {
   SignUpDto,
   VerificationCodeDto,
 } from './auth.dto';
-import { DataSource, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { User } from 'src/entities/user.entity';
 import { SecureService } from 'src/services/secure/secure.service';
 import * as crypto from 'crypto';
 import { AwsSnsService } from 'src/services/aws-sns/aws-sns.service';
 import { RedisService } from 'src/services/redis/redis.service';
-import * as createHttpError from 'http-errors';
 import { InjectRepository } from '@nestjs/typeorm';
+import {
+  EmailAlreadyExistsException,
+  SmsSendingFailedException,
+} from 'src/common/exception';
 
 @Injectable()
 export class AuthService {
+  private publicFields: (keyof User)[] = [
+    'id',
+    'name',
+    'last_name',
+    'email',
+    'photo_url',
+    'rol',
+  ];
   private l18n = getL18N('ES');
 
   constructor(
-    private readonly connection: DataSource,
     private readonly secureService: SecureService,
     private readonly awsSnsService: AwsSnsService,
     private readonly redisService: RedisService,
@@ -54,37 +64,48 @@ export class AuthService {
       where: { email: payload.email },
     });
     if (exists) {
-      throw new createHttpError.BadRequest('Email already exists!');
+      throw new EmailAlreadyExistsException();
     }
-    await this.usersRepository.save({
+    const user = await this.usersRepository.save({
       ...payload,
       validation_code: '',
       password: (
         await this.secureService.hashPassword(payload.password)
       ).toString('base64'),
     });
+
+    return this.findOne(user.id);
+  }
+
+  async findOne(id: number) {
+    return this.usersRepository.findOne({
+      where: { id, deleted_at: null },
+      select: this.publicFields,
+    });
   }
 
   async emailSignIn(payload: SignInDto) {
     let exists = await this.usersRepository.findOne({
-      where: { email: payload.email },
+      select: ['id', 'password'],
+      where: { email: payload.email, deleted_at: null },
     });
-    if (!exists) throw new createHttpError.Unauthorized();
+    if (!exists) throw new UnauthorizedException();
 
     const validation = await this.secureService.comparePassword(
       payload.password,
       Buffer.from(exists.password, 'base64'),
     );
-    if (!validation) throw new createHttpError.Unauthorized();
+    if (!validation) throw new UnauthorizedException();
 
-    return this.generateSessionToken(exists).then((token) => ({
+    return this.generateSessionToken(exists).then(async (token) => ({
+      user: await this.findOne(exists.id),
       token,
     }));
   }
 
   async phoneSignIn(payload: PhoneSignInDto) {
     let exists = await this.usersRepository.findOne({
-      where: { phone: payload.phone },
+      where: { phone: payload.phone, deleted_at: null },
     });
     const validation_code = await this.generateRandomString(6);
     if (!exists) {
@@ -108,15 +129,12 @@ export class AuthService {
 
     const message = this.l18n.sms.accountValidation(validation_code);
     await this.awsSnsService.sendSMS(payload.phone, message).catch((err) => {
-      throw new createHttpError.InternalServerError(
-        'No fue posible enviar el sms',
-      );
+      throw new SmsSendingFailedException();
     });
   }
 
   async verificationCode(payload: VerificationCodeDto) {
-    if (!payload.email && !payload.phone)
-      throw new createHttpError.Unauthorized();
+    if (!payload.email && !payload.phone) throw new UnauthorizedException();
     const query = payload.email
       ? { email: payload.email }
       : { phone: payload.phone };
@@ -128,7 +146,7 @@ export class AuthService {
       },
     });
     if (!exists) {
-      throw new createHttpError.Unauthorized();
+      throw new UnauthorizedException();
     }
 
     await this.usersRepository.update(
@@ -146,13 +164,29 @@ export class AuthService {
 
   async getSession(id: number, sessionToken: string) {
     const session = await this.usersRepository.findOne({
-      where: { id },
+      where: { id, deleted_at: null },
       select: ['id', 'name', 'last_name', 'email', 'photo_url', 'rol'],
     });
     return {
-      ...session,
+      user: session,
       token: sessionToken,
     };
+  }
+
+  async validateToken(token: string) {
+    const sessionKey = `session:${token}`;
+    const userId = await this.redisService.get(sessionKey);
+    const session = userId
+      ? await this.usersRepository.findOne({
+          select: this.publicFields,
+          where: {
+            id: Number.parseInt(userId),
+            deleted_at: null,
+          },
+        })
+      : null;
+
+    return session;
   }
 
   async generateSessionToken(user: User) {

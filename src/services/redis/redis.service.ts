@@ -26,9 +26,9 @@ export class RedisService implements CacheService {
       url: this.configService.get('redisUrl'),
     };
 
-    this.redisClient = createClient();
-    this.redisPub = createClient();
-    this.redisSub = createClient();
+    this.redisClient = createClient(clientArgs);
+    this.redisPub = createClient(clientArgs);
+    this.redisSub = createClient(clientArgs);
 
     this.redisClient.connect();
     this.redisPub.connect();

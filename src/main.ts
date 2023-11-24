@@ -4,10 +4,9 @@ import getConfig from './config/configuration';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { WsAdapter } from './realtime/server';
 
-const config = getConfig();
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const config = getConfig();
 
   const documentConfig = new DocumentBuilder()
     .setTitle('Tana AI API')
@@ -21,7 +20,6 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document);
 
   app.useWebSocketAdapter(new WsAdapter(app));
-
   app.enableCors({ origin: '*' });
 
   await app.listen(config.port);

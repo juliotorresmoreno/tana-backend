@@ -21,7 +21,10 @@ export class AuthController {
   @Post('sign-up')
   @UsePipes(new JoiValidationPipe(signUpSchema))
   postSignUp(@Body() payload: SignUpDto) {
-    return this.authService.emailSignUp(payload);
+    return this.authService.emailSignUp(payload).then(async (user) => ({
+      token: await this.authService.generateSessionToken(user),
+      user,
+    }));
   }
 
   @Post('sign-in')

@@ -7,6 +7,7 @@ import { SecureModule } from './services/secure/secure.module';
 import { RedisModule } from './services/redis/redis.module';
 import { AwsSesModule } from './services/aws-ses/aws-ses.module';
 import { HbsRemplateModule } from './services/hbs-remplate/hbs-remplate.module';
+import { ChatBotModule } from './resources/chatbot/chatbot.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { HbsRemplateModule } from './services/hbs-remplate/hbs-remplate.module';
     RedisModule,
     AwsSesModule,
     HbsRemplateModule,
+    ChatBotModule,
   ],
   providers: [SecureService],
 })

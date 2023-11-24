@@ -8,11 +8,12 @@ import {
 import { MessageMappingProperties } from '@nestjs/websockets';
 import { Observable, fromEvent, EMPTY } from 'rxjs';
 import { mergeMap, filter } from 'rxjs/operators';
+import { IncomingMessage } from 'http';
 
 export class WsAdapter implements WebSocketAdapter {
   private readonly logger = new Logger(WsAdapter.name);
 
-  constructor(private app: INestApplication) {}
+  constructor(private app: INestApplication, private second?: any) {}
 
   create(port: number, options: any = {}): any {
     if (!port)
@@ -28,7 +29,21 @@ export class WsAdapter implements WebSocketAdapter {
   }
 
   bindClientConnect(server, callback: Function) {
-    server.on('connection', callback);
+    server.on('connection', function (socket: WebSocket, req: IncomingMessage) {
+      const url = req.url.split('?');
+
+      if (url[0] !== '/ws') {
+        socket.close();
+        return;
+      }
+
+      if (url[1].substring(0, 6) !== 'token=') {
+        socket.close();
+        return;
+      }
+
+      callback(socket, req);
+    });
   }
 
   bindMessageHandlers(

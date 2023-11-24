@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import getConfig from 'src/config/configuration';
 import { Configuration } from 'src/types/configuration';
-import { ListTopicsCommand, SNSClient } from '@aws-sdk/client-sns';
+import { PublishCommand, SNSClient } from '@aws-sdk/client-sns';
 
 @Injectable()
 export class AwsSnsService {
@@ -24,13 +24,15 @@ export class AwsSnsService {
     if (!this.clientSNS) {
       throw new Error('No se puede enviar el SMS');
     }
-    const params = {
-      /** input parameters */
-    };
-    const command = new ListTopicsCommand(params);
-    const data = await this.clientSNS.send(command);
+
+    const response = await this.clientSNS.send(
+      new PublishCommand({
+        Message: message,
+        PhoneNumber: phone,
+      }),
+    );
     if (nodeEnv === 'development') {
-      console.log('Enviado', phone, message, data);
+      console.log('Enviado', phone, message, response);
     }
   }
 }

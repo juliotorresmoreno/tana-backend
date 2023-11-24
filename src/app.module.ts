@@ -1,14 +1,14 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import configuration from './config/configuration';
 import { HealthcheckController } from './healthcheck/healthcheck.controller';
 import { ApiModule } from './api.module';
 import { AuthMiddleware } from './resources/auth/auth.middleware';
 import { RedisService } from './services/redis/redis.service';
 import { User } from './entities/user.entity';
-import getConfig from './config/configuration';
 import { EventsModule } from './services/events/events.module';
+import getConfig from './config/configuration';
+import configuration from './config/configuration';
 
 @Module({
   imports: [
