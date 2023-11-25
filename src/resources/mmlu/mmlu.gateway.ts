@@ -7,14 +7,15 @@ import {
 } from '@nestjs/websockets';
 import { IncomingMessage } from 'http';
 import { AuthService } from 'src/resources/auth/auth.service';
+import { Message } from 'src/types/models';
 import { Server, WebSocket } from 'ws';
 
 @WebSocketGateway()
-export class EventsGateway implements OnGatewayConnection {
+export class MmluGateway implements OnGatewayConnection {
   @WebSocketServer()
   server: Server;
 
-  private readonly logger = new Logger(EventsGateway.name);
+  private readonly logger = new Logger(MmluGateway.name);
 
   constructor(private authService: AuthService) {}
 
@@ -35,10 +36,20 @@ export class EventsGateway implements OnGatewayConnection {
   }
 
   @SubscribeMessage('message')
-  onEvent(socket: WebSocket, data: any) {
-    console.log(data);
-    this.server.clients.forEach((client) => {
+  onEvent(socket: WebSocket, data: string) {
+    const response: Message = {
+      answer: data,
+      response: data,
+    };
+    socket.send(
+      JSON.stringify({
+        event: 'message',
+        data: response,
+      }),
+    );
+    // console.log(data);
+    /*this.server.clients.forEach((client) => {
       client.send(JSON.stringify({ event: 'message', data: 'sdfsd' }));
-    });
+    });*/
   }
 }

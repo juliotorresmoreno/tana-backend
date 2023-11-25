@@ -1,12 +1,14 @@
-import { PipeTransform, Injectable, HttpException } from '@nestjs/common';
+import {
+  PipeTransform,
+  Injectable,
+  HttpException,
+  BadRequestException,
+} from '@nestjs/common';
 import * as createHttpError from 'http-errors';
 import { ObjectSchema } from 'joi';
 
 type TransformValues = string | number | boolean;
 
-/**
- * Custom pipe for Joi validate schemas
- */
 @Injectable()
 export class JoiValidationPipe implements PipeTransform {
   constructor(private schema: ObjectSchema) {}
@@ -23,9 +25,9 @@ export class JoiValidationPipe implements PipeTransform {
         throw error;
       }
 
-      throw new createHttpError.BadRequest(
-        error.message ? `${error.message}` : `Validation failed`,
-      );
+      throw new BadRequestException({
+        message: error.message ? `${error.message}` : `Validation failed`,
+      });
     }
     return value;
   }

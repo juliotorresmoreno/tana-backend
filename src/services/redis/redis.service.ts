@@ -23,7 +23,7 @@ export class RedisService implements CacheService {
 
   constructor(private configService: ConfigService<Configuration>) {
     const clientArgs: RedisClientOptions = {
-      url: this.configService.get('redisUrl'),
+      url: this.configService.get('redis').url,
     };
 
     this.redisClient = createClient(clientArgs);

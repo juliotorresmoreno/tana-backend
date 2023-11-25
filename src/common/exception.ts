@@ -69,6 +69,26 @@ export class SmsSendingFailedException extends InternalServerErrorException {
   }
 }
 
+export class IDException extends BadRequestException {
+  constructor() {
+    super({
+      field_name: 'id',
+      message:
+        'Please provide a valid id.',
+    });
+  }
+}
+
+export class PromptException extends BadRequestException {
+  constructor() {
+    super({
+      field_name: 'prompt',
+      message:
+        'Please provide a valid prompt. It should meet specific criteria.',
+    });
+  }
+}
+
 export class FetchException extends ServiceUnavailableException {
   constructor() {
     super({

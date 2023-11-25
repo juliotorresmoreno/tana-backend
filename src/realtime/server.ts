@@ -13,7 +13,7 @@ import { IncomingMessage } from 'http';
 export class WsAdapter implements WebSocketAdapter {
   private readonly logger = new Logger(WsAdapter.name);
 
-  constructor(private app: INestApplication, private second?: any) {}
+  constructor(private app: INestApplication) {}
 
   create(port: number, options: any = {}): any {
     if (!port)

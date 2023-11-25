@@ -1,7 +1,7 @@
 
 @host=http://localhost:4040
 
-@authorization=h0iwULJvVS3VkTbSd4J7GCqClPvrG31cJb6KFnvNE4ISrBe32qPCIEt62hZ7lKKZ
+@authorization=IqGU93wulGWzpv7l9p7O8DzYfBarHEltSD0sXC3hmfHUmSfOYjq5IxlJb3tuyJy6
 
 ###
 GET {{host}}/health
@@ -53,124 +53,11 @@ GET {{host}}/auth/session
 Content-Type: application/json
 Authorization: Bearer {{authorization}}
 
-
 ###
-PATCH {{host}}/users/profile
+POST {{host}}/mmlu/answer
 Content-Type: application/json
 Authorization: Bearer {{authorization}}
 
 {
-    "rol": "seller"
+  "prompt": "hello world"
 }
-
-###
-PATCH {{host}}/users/profile
-Content-Type: application/json
-Authorization: Bearer {{authorization}}
-
-{
-    "rol": "client"
-}
-
-###
-PATCH {{host}}/users/profile
-Content-Type: application/json
-Authorization: Bearer {{authorization}}
-
-{
-    "name": "julio",
-    "last_name": "torres"
-}
-
-###
-PATCH {{host}}/users/profile
-Content-Type: application/json
-Authorization: Bearer {{authorization}}
-
-{
-    "phone": "julio"
-}
-
-###
-POST {{host}}/shops
-Content-Type: application/json
-Authorization: Bearer {{authorization}}
-
-{
-    "identify": "onnasoft",
-    "name": "Onnasoft",
-    "description": "Consultora de software"
-}
-
-###
-POST {{host}}/shops
-Content-Type: application/json
-Authorization: Bearer {{authorization}}
-
-{
-    "identify": "onnasoft2",
-    "name": "Onnasoft2",
-    "description": "Consultora de software"
-}
-
-###
-GET {{host}}/shops
-Content-Type: application/json
-Authorization: Bearer {{authorization}}
-
-###
-GET {{host}}/shops/me
-Content-Type: application/json
-Authorization: Bearer {{authorization}}
-
-
-###
-GET {{host}}/qr-code/generate
-Content-Type: application/json
-Authorization: Bearer {{authorization}}
-
-###
-POST {{host}}/users/subscribe
-Content-Type: application/json
-Authorization: Bearer {{authorization}}
-
-{
-    "shop_id": 1
-}
-
-###
-POST {{host}}/users/subscribe
-Content-Type: application/json
-Authorization: Bearer {{authorization}}
-
-{
-    "shop_id": 1
-}
-
-###
-POST {{host}}/products
-Content-Type: application/json
-Authorization: Bearer {{authorization}}
-
-{
-    "sku": "carro",
-    "name": "Carro",
-    "description": "carro ultimo modelo",
-    "shop_id": 1
-}
-
-###
-GET {{host}}/products
-Authorization: Bearer {{authorization}}
-
-###
-PATCH {{host}}/products/5
-Content-Type: application/json
-Authorization: Bearer {{authorization}}
-
-{
-    "sku": "carro",
-    "name": "Carro2",
-    "description": "carro ultimo modelo"
-}
-

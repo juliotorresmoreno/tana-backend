@@ -1,9 +1,9 @@
+import { Repository } from 'typeorm';
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Response } from 'express';
 import { RedisService } from 'src/services/redis/redis.service';
 import { User } from 'src/entities/user.entity';
 import { RequestWithSession } from 'src/types/http';
-import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
