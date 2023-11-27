@@ -54,10 +54,31 @@ Content-Type: application/json
 Authorization: Bearer {{authorization}}
 
 ###
+GET {{host}}/connections
+Authorization: Bearer {{authorization}}
+
+###
 POST {{host}}/mmlu/answer
 Content-Type: application/json
 Authorization: Bearer {{authorization}}
 
 {
+  "id": 1,
   "prompt": "hello world"
+}
+
+###
+GET {{host}}/mmlu/history/1
+Authorization: Bearer {{authorization}}
+
+###
+DELETE {{host}}/mmlu/history/1
+Authorization: Bearer {{authorization}}
+
+###
+POST http://localhost:11434/api/embeddings
+Content-Type: application/json
+
+{
+  "prompt": "Hello world"
 }

@@ -47,9 +47,5 @@ export class MmluGateway implements OnGatewayConnection {
         data: response,
       }),
     );
-    // console.log(data);
-    /*this.server.clients.forEach((client) => {
-      client.send(JSON.stringify({ event: 'message', data: 'sdfsd' }));
-    });*/
   }
 }

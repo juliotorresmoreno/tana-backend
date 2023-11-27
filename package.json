@@ -44,6 +44,7 @@
     "joi-phone-number": "^5.1.1",
     "js-yaml": "^4.1.0",
     "langchain": "^0.0.197-rc.1",
+    "node-llama-cpp": "^2.8.0",
     "pg": "^8.11.3",
     "phone": "^3.1.41",
     "postgres": "^3.4.3",
@@ -53,6 +54,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
     "typeorm": "^0.3.17",
+    "uuid": "^9.0.1",
     "ws": "^8.14.2"
   },
   "jest": {

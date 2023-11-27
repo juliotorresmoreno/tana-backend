@@ -1,21 +1,23 @@
 import {
-  Body,
   Controller,
+  Post,
+  Body,
+  UsePipes,
+  Res,
+  Req,
   Get,
   Param,
-  Post,
-  Res,
-  UsePipes,
-  Req,
+  Query,
+  Delete,
 } from '@nestjs/common';
 import { MmluService } from './mmlu.service';
-import { ApiTags } from '@nestjs/swagger';
-import { AnswerDto } from './mmlu.dto';
 import { JoiValidationPipe } from 'src/pipes/joiValidationPipe';
-import { answerSchema } from './joiSchema';
-import { ServerResponse } from 'http';
 import { Authentication } from 'src/utils/secure';
 import { RequestWithSession } from 'src/types/http';
+import { ServerResponse } from 'http';
+import { AnswerDto } from '../mmlu/mmlu.dto';
+import { answerSchema } from './joiSchema';
+import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('mmlu')
 @Controller('mmlu')
@@ -32,14 +34,33 @@ export class MmluController {
     return this.mmluService.findOne(+id);
   }
 
-  @Post('/answer')
+  @Delete('/history/:bot_id')
   @Authentication()
+  async deleteHistory(
+    @Req() req: RequestWithSession,
+    @Param('bot_id') botId: string,
+  ) {
+    return this.mmluService.deleteHistory(req.session, botId);
+  }
+
+  @Get('/history/:bot_id')
+  @Authentication()
+  async getHistory(
+    @Req() req: RequestWithSession,
+    @Param('bot_id') botId: string,
+  ) {
+    return this.mmluService.getHistory(req.session, botId);
+  }
+
+  @Post('/answer')
   @UsePipes(new JoiValidationPipe(answerSchema))
+  @Authentication()
   async answer(
     @Req() req: RequestWithSession,
     @Res() res: ServerResponse,
     @Body() payload: AnswerDto,
   ) {
+    res.setHeader('Content-Type', 'text/plain');
     await this.mmluService.answer(payload, req.session, res);
   }
 }

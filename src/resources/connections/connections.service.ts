@@ -1,15 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateConnectionDto } from './dto/create-connection.dto';
-import { UpdateConnectionDto } from './dto/update-connection.dto';
 import { MmluService } from '../mmlu/mmlu.service';
 
 @Injectable()
 export class ConnectionsService {
   constructor(private mmluService: MmluService) {}
-
-  create(createConnectionDto: CreateConnectionDto) {
-    return 'This action adds a new connection';
-  }
 
   findAll() {
     return this.mmluService.findAll();
@@ -17,13 +11,5 @@ export class ConnectionsService {
 
   findOne(id: number) {
     return `This action returns a #${id} connection`;
-  }
-
-  update(id: number, updateConnectionDto: UpdateConnectionDto) {
-    return `This action updates a #${id} connection`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} connection`;
   }
 }
