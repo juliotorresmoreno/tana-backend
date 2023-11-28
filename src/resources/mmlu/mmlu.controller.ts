@@ -52,6 +52,16 @@ export class MmluController {
     return this.mmluService.getHistory(req.session, botId);
   }
 
+  @Post('/embeddings')
+  @Authentication()
+  async getEmbeddings(
+    @Req() req: RequestWithSession,
+    @Body() payload: AnswerDto,
+  ) {
+    return this.mmluService.getEmbeddings(payload);
+  }
+
+
   @Post('/answer')
   @UsePipes(new JoiValidationPipe(answerSchema))
   @Authentication()

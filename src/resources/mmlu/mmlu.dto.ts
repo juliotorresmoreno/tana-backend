@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class AnswerDto {
   @ApiProperty()
-  id?: string;
+  bot_id: string;
 
   @ApiProperty()
   prompt: string;

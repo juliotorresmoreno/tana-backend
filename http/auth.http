@@ -63,7 +63,17 @@ Content-Type: application/json
 Authorization: Bearer {{authorization}}
 
 {
-  "id": 1,
+  "bot_id": 1,
+  "prompt": "tengo sed"
+}
+
+###
+POST {{host}}/mmlu/embeddings
+Content-Type: application/json
+Authorization: Bearer {{authorization}}
+
+{
+  "bot_id": 1,
   "prompt": "hello world"
 }
 
