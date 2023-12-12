@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@anthropic-ai/sdk@^0.10.0":
-  version "0.10.0"
-  resolved "https://registry.npmjs.org/@anthropic-ai/sdk/-/sdk-0.10.0.tgz"
-  integrity sha512-OqTbjjZzDjkCSe0RcNTNeVrHLrC3RUzUvTJB/qt6seVaETnLkKt6b4hkOnkhkXnBHH8+w20zmB4Ekcwir2B/sw==
+"@anthropic-ai/sdk@^0.9.1":
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/@anthropic-ai/sdk/-/sdk-0.9.1.tgz#b2d2b7bf05c90dce502c9a2e869066870f69ba88"
+  integrity sha512-wa1meQ2WSfoY8Uor3EdrJq0jTiZJoKoSii2ZVWRY1oN4Tlr5s59pADg9T79FTbPe1/se5c3pBeZgJL63wmuoBA==
   dependencies:
     "@types/node" "^18.11.18"
     "@types/node-fetch" "^2.6.4"
@@ -535,37 +535,43 @@
   resolved "https://registry.yarnpkg.com/@kwsites/promise-deferred/-/promise-deferred-1.1.1.tgz#8ace5259254426ccef57f3175bc64ed7095ed919"
   integrity sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==
 
-"@langchain/anthropic@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.npmjs.org/@langchain/anthropic/-/anthropic-0.0.3.tgz"
-  integrity sha512-iSp0S7h02cUS1ClyrKRBKqp7E8y1qjjZg5Tu5HLTOrRRBDgi22P7Jph1BNB8hazX/+YotDCTlChaBoolhsspXQ==
+"@langchain/community@~0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@langchain/community/-/community-0.0.2.tgz#5665e68cf20889816b5026518729e4a79595927f"
+  integrity sha512-C4wu+IoFbvM0ndSE3etVjqzw7K7vCCN+qIuus2/c0LTJXlhR07o2cR2m45rJkLngmi7akYir+wyRop0eauFuog==
   dependencies:
-    "@anthropic-ai/sdk" "^0.10.0"
-    "@langchain/core" "~0.0.1"
+    "@langchain/core" "~0.0.11"
+    "@langchain/openai" "~0.0.2"
+    flat "^5.0.2"
+    langsmith "~0.0.48"
+    uuid "^9.0.0"
+    zod "^3.22.3"
 
-"@langchain/core@^0.0.1", "@langchain/core@~0.0.1":
-  version "0.0.1"
-  resolved "https://registry.npmjs.org/@langchain/core/-/core-0.0.1.tgz"
-  integrity sha512-VgpKcfvtC+oN5ZfCX1k05fXmMs87/U0j4KzOiGbgIjwO9xfE8bIMesodinDQO1H5ohF1SEDE1tSeVXz/bTuang==
+"@langchain/core@~0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@langchain/core/-/core-0.0.11.tgz#d769c499720d40efb2147579c3137a78def350d5"
+  integrity sha512-tiESyyHM1KO1gRTduKcznWbEmE7z/ayPLWZ4+AUXF47qOtdV6lymnlMPzz+MGwnpaSaamzyYkBIxqeMPar256Q==
   dependencies:
     ansi-styles "^5.0.0"
     camelcase "6"
     decamelize "1.2.0"
-    js-tiktoken "^1.0.7"
-    langsmith "^0.0.48"
+    js-tiktoken "^1.0.8"
+    langsmith "~0.0.48"
+    ml-distance "^4.0.0"
     p-queue "^6.6.2"
     p-retry "4"
     uuid "^9.0.0"
     zod "^3.22.3"
 
-"@langchain/openai@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.npmjs.org/@langchain/openai/-/openai-0.0.1.tgz"
-  integrity sha512-AYmsaiI4Vh1q1llGu1+P77oDqeSuSLavUzaaT25xJtCLl0o/2mqF6BQ1Wa0/HJ1+vOKxRDvCk9jhB4RjJSkuTg==
+"@langchain/openai@~0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@langchain/openai/-/openai-0.0.2.tgz#ec3c6d8503771808796492ccd599baf4fd3481b6"
+  integrity sha512-GhiC8afAjta37fXFPiEjTmJ3Uof9HNoahLAxPGjhN1pJrUPisA6nXhsqp6Iab281GN5Xxdms5YsV7BwrfsUt2Q==
   dependencies:
-    "@langchain/core" "~0.0.1"
+    "@langchain/core" "~0.0.11"
     js-tiktoken "^1.0.7"
     openai "^4.19.0"
+    zod "^3.22.3"
     zod-to-json-schema "3.20.3"
 
 "@lukeed/csprng@^1.0.0":
@@ -2563,7 +2569,7 @@ joi@^17.11.0:
     "@sideway/formula" "^3.0.1"
     "@sideway/pinpoint" "^2.0.0"
 
-js-tiktoken@^1.0.7:
+js-tiktoken@^1.0.7, js-tiktoken@^1.0.8:
   version "1.0.8"
   resolved "https://registry.npmjs.org/js-tiktoken/-/js-tiktoken-1.0.8.tgz"
   integrity sha512-r7XK3E9/I+SOrbAGqb39pyO/rHAS1diAOSRAvaaLfHgXjkUSK9AiSd+r84Vn2f/GvXJYRAxKj8NHrUvqlaH5qg==
@@ -2624,17 +2630,17 @@ jws@^3.2.2:
     jwa "^1.4.1"
     safe-buffer "^5.0.1"
 
-langchain@^0.0.197-rc.1:
-  version "0.0.197-rc.1"
-  resolved "https://registry.npmjs.org/langchain/-/langchain-0.0.197-rc.1.tgz"
-  integrity sha512-KyIolBPL7LxktSUPPm0qvTJP0z5OTLzbk4zEJu55iNm3r5W8ucWUEnvv+kqJPubF+z2+b+aZoqT8+MevsFwfEA==
+langchain@^0.0.204:
+  version "0.0.204"
+  resolved "https://registry.yarnpkg.com/langchain/-/langchain-0.0.204.tgz#0df527881b5adc560ff6f4a76f1c2f957841bcc1"
+  integrity sha512-fLTgPhheCE/4SXsj1C5t+txbBbVtfN9dNoKysDPxGyRUZHycSd3A+cEyn7dJJGYHZxRMc7EQgg7yffxzrM7c0A==
   dependencies:
-    "@langchain/anthropic" "^0.0.3"
-    "@langchain/core" "^0.0.1"
-    "@langchain/openai" "^0.0.1"
+    "@anthropic-ai/sdk" "^0.9.1"
+    "@langchain/community" "~0.0.2"
+    "@langchain/core" "~0.0.11"
+    "@langchain/openai" "~0.0.2"
     binary-extensions "^2.2.0"
     expr-eval "^2.0.2"
-    flat "^5.0.2"
     js-tiktoken "^1.0.7"
     js-yaml "^4.1.0"
     jsonpointer "^5.0.1"
@@ -2653,7 +2659,7 @@ langchainhub@~0.0.6:
   resolved "https://registry.npmjs.org/langchainhub/-/langchainhub-0.0.6.tgz"
   integrity sha512-SW6105T+YP1cTe0yMf//7kyshCgvCTyFBMTgH2H3s9rTAR4e+78DA/BBrUL/Mt4Q5eMWui7iGuAYb3pgGsdQ9w==
 
-langsmith@^0.0.48, langsmith@~0.0.48:
+langsmith@~0.0.48:
   version "0.0.48"
   resolved "https://registry.npmjs.org/langsmith/-/langsmith-0.0.48.tgz"
   integrity sha512-s0hW8iZ90Q9XLTnDK0Pgee245URV3b1cXQjPDj5OKm1+KN7iSK1pKx+4CO7RcFLz58Ixe7Mt+mVcomYqUuryxQ==
