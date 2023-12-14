@@ -1424,10 +1424,10 @@
   dependencies:
     "@types/node" "*"
 
-"@xenova/transformers@^2.9.0":
-  version "2.9.0"
-  resolved "https://registry.npmjs.org/@xenova/transformers/-/transformers-2.9.0.tgz"
-  integrity sha512-wzSjIMpkVaD+bIgIVxlXDeeKawr233t+1pPb5AhpYeTAPFdOaVUVdT4vIKqmmszApBFYYUpOqv5LoJ4lOAm6Ug==
+"@xenova/transformers@^2.11.0":
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/@xenova/transformers/-/transformers-2.11.0.tgz#db9695240e5880823bee9199f27d7e51e7a09379"
+  integrity sha512-i/oaTbVJI+pbkWiUZydmaGFlSh3167N+gimkIJBlHf150wQWffwGE9dPttLsS9cLlmty95Z1MkVQmibl/j7bSg==
   dependencies:
     onnxruntime-web "1.14.0"
     sharp "^0.32.0"
