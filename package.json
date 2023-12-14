@@ -21,7 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@aws-sdk/client-sesv2": "^3.454.0",
+    "@aws-sdk/client-sesv2": "^3.473.0",
     "@aws-sdk/client-sns": "^3.454.0",
     "@nestjs/common": "^10.2.10",
     "@nestjs/config": "^3.1.1",
